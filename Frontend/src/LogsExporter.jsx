@@ -122,7 +122,8 @@ export default function LogsExporter() {
 
         if (!resp.ok) {
           const errBody = await resp.json().catch(() => ({}));
-          throw new Error(errBody.error || `Error HTTP ${resp.status}`);
+          const detail = errBody.detail ? ` — Detalle: ${errBody.detail}` : '';
+          throw new Error((errBody.error || `Error HTTP ${resp.status}`) + detail);
         }
 
         const data = await resp.json();
